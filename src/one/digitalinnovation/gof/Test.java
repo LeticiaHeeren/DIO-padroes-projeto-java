@@ -2,56 +2,33 @@ package one.digitalinnovation.gof;
 
 import one.digitalinnovation.gof.facade.Facade;
 import one.digitalinnovation.gof.singleton.SingletonEager;
-import one.digitalinnovation.gof.singleton.SingletonLazy;
-import one.digitalinnovation.gof.singleton.SingletonLazyHolder;
-import one.digitalinnovation.gof.strategy.Comportamento;
-import one.digitalinnovation.gof.strategy.ComportamentoAgressivo;
-import one.digitalinnovation.gof.strategy.ComportamentoDefensivo;
-import one.digitalinnovation.gof.strategy.ComportamentoNormal;
-import one.digitalinnovation.gof.strategy.Robo;
+import one.digitalinnovation.gof.strategy.*;
 
 public class Test {
 
-	public static void main(String[] args) {
-		
-		// Singleton
-		
-		SingletonLazy lazy = SingletonLazy.getInstancia();
-		System.out.println(lazy);
-		lazy = SingletonLazy.getInstancia();
-		System.out.println(lazy);
-		
-		SingletonEager eager = SingletonEager.getInstancia();
-		System.out.println(eager);
-		eager = SingletonEager.getInstancia();
-		System.out.println(eager);
-		
-		SingletonLazyHolder lazyHolder = SingletonLazyHolder.getInstancia();
-		System.out.println(lazyHolder);
-		lazyHolder = SingletonLazyHolder.getInstancia();
-		System.out.println(lazyHolder);
-		
-		// Strategy
-		
-		Comportamento defensivo = new ComportamentoDefensivo();
-		Comportamento normal = new ComportamentoNormal();
-		Comportamento agressivo = new ComportamentoAgressivo();
-		
-		Robo robo = new Robo();
-		robo.setComportamento(normal);
-		robo.mover();
-		robo.mover();
-		robo.setComportamento(defensivo);
-		robo.mover();
-		robo.setComportamento(agressivo);
-		robo.mover();
-		robo.mover();
-		robo.mover();
-		
-		// Facade
-		
-		Facade facade = new Facade();
-		facade.migrarCliente("Venilton", "14801788");
-	}
+    public static void main(String[] args) {
 
+        // Testando Singleton
+        SingletonEager eager = SingletonEager.getInstancia();
+        System.out.println(eager.getInfo()); // Saída: Instância SingletonEager criada!
+
+        // Testando Strategy
+        Robo roboInteligente = RoboFactory.criarRoboInteligente();
+        roboInteligente.mover(); // Saída: Seguindo em direção ao objetivo...
+
+        Robo roboCurioso = RoboFactory.criarRoboCurioso();
+        roboCurioso.mover(); // Saída: Explorando o ambiente curiosamente...
+
+        Robo roboEvasivo = RoboFactory.criarRoboEvasivo();
+        roboEvasivo.mover(); // Saída: Movendo-se de forma evasiva...
+
+        Robo roboPatrulha = RoboFactory.criarRoboPatrulha();
+        roboPatrulha.mover(); // Saída: Patrulhando a área...
+
+        // Testando Facade
+        Facade facade = new Facade();
+        facade.migrarCliente("Jo\u00E3o", "14801788");
+        // Saída esperada:
+        // Notificação enviada: Cliente João migrado com sucesso!
+    }
 }
